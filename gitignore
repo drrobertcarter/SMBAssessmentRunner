@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+package-lock.json
+
+# generated decks & intermediates (keep the two example .pptx that ship with the repo)
+AI_Strategy.pptx
+output.pptx
+*.pdf
+slide-*.jpg
+m-*.jpg
+p-*.jpg
+*.tmp
+
+# os / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+npm-debug.log*

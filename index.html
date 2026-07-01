@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ends · Ways · Means — AI Integration Strategy Pipeline</title>
+<style>
+  :root{
+    --ink:#0B2A30; --surface:#13343B; --panel:#10424C; --panel2:#0E3A43;
+    --teal:#028090; --mint:#02C39A; --sea:#00A896; --copper:#C2703D;
+    --text:#EAF4F4; --muted:#9DB2B7; --muted2:#7C9298; --line:#234E58;
+    --sans:"Calibri","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+    --maxw:1040px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--ink); color:var(--text); font-family:var(--sans);
+    line-height:1.55; -webkit-font-smoothing:antialiased; font-size:16px;
+  }
+  a{color:var(--mint); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
+  .eyebrow{font-size:.72rem; font-weight:700; letter-spacing:.22em; color:var(--teal); text-transform:uppercase}
+  h1,h2,h3{font-weight:300; line-height:1.12; margin:0}
+  h2{font-size:clamp(1.5rem,3.2vw,2.1rem); margin:0 0 .35em}
+  h3{font-size:1.06rem; font-weight:600}
+  section{padding:54px 0; border-top:1px solid var(--line)}
+  .lead{color:var(--muted); font-size:1.02rem; max-width:64ch}
+  .muted{color:var(--muted)} .dim{color:var(--muted2)}
+
+  /* hero */
+  .hero{position:relative; overflow:hidden; padding:72px 0 58px; border-top:none;
+        background:radial-gradient(120% 140% at 88% -20%, var(--panel2) 0%, var(--ink) 55%)}
+  .hero h1{font-size:clamp(2.1rem,6vw,3.7rem); color:#fff; margin:.28em 0 .3em; max-width:16ch}
+  .hero .kw{color:var(--teal); font-weight:600}
+  .pills{display:flex; flex-wrap:wrap; gap:10px; margin-top:26px}
+  .pill{border:1px solid var(--teal); border-radius:22px; padding:8px 15px; font-size:.86rem; font-weight:600;
+        background:var(--panel); color:var(--text)}
+  .pill:nth-child(2){border-color:var(--sea)} .pill:nth-child(3){border-color:var(--copper)}
+  .pill b{color:var(--mint); font-weight:700}
+
+  /* flow (signature) */
+  .flow{display:flex; align-items:stretch; gap:0; flex-wrap:wrap}
+  .node{flex:1 1 150px; min-width:150px; background:var(--panel); border:1px solid var(--line);
+        border-radius:12px; padding:16px 16px 18px; box-shadow:0 6px 18px rgba(0,0,0,.28)}
+  .node .n{font-size:.68rem; font-weight:700; letter-spacing:.14em; color:var(--copper)}
+  .node .t{display:block; margin-top:6px; font-size:1.02rem; font-weight:600; color:#fff}
+  .node code{font-family:var(--mono); font-size:.82rem; color:var(--mint); background:transparent}
+  .node .d{margin-top:5px; font-size:.83rem; color:var(--muted)}
+  .arrow{display:flex; align-items:center; justify-content:center; width:34px; color:var(--muted2); flex:0 0 34px}
+  .arrow svg{width:16px;height:16px}
+  @media(max-width:640px){
+    .flow{flex-direction:column}
+    .arrow{width:100%; height:26px; transform:rotate(90deg)}
+  }
+
+  /* file cards */
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; margin-top:26px}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:18px 18px 16px;
+        transition:transform .16s ease, border-color .16s ease}
+  .card:hover{transform:translateY(-2px); border-color:var(--teal)}
+  .card .fn{font-family:var(--mono); font-size:.9rem; color:#fff; font-weight:600; word-break:break-word}
+  .card .role{display:inline-block; margin:8px 0 9px; font-size:.66rem; font-weight:700; letter-spacing:.12em;
+              text-transform:uppercase; color:var(--ink); background:var(--teal); padding:3px 8px; border-radius:11px}
+  .card.core .role{background:var(--mint)}
+  .card.out .role{background:var(--copper)}
+  .card p{margin:0 0 12px; font-size:.9rem; color:var(--muted)}
+  .card .open{font-size:.83rem; font-weight:600}
+
+  /* code */
+  pre{background:var(--panel2); border:1px solid var(--line); border-radius:12px; padding:16px 18px; overflow:auto;
+      font-family:var(--mono); font-size:.85rem; color:var(--text); margin:18px 0 0}
+  pre .c{color:var(--muted2)} pre .k{color:var(--mint)}
+
+  /* principles */
+  .principles{list-style:none; margin:24px 0 0; padding:0; display:grid; gap:12px;
+              grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+  .principles li{position:relative; padding-left:34px; font-size:.94rem; color:var(--text)}
+  .principles .num{position:absolute; left:0; top:-1px; width:24px; height:24px; border-radius:50%;
+       border:1.4px solid var(--teal); color:var(--mint); font-size:.72rem; font-weight:700;
+       display:flex; align-items:center; justify-content:center}
+  .principles b{color:#fff; font-weight:600}
+
+  /* deck contents */
+  .cols{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px; margin-top:24px}
+  .col h3{margin-bottom:10px}
+  .col .tone{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+  .col:nth-child(1) .tone{color:var(--teal)} .col:nth-child(2) .tone{color:var(--sea)} .col:nth-child(3) .tone{color:var(--copper)}
+  .col ul{margin:8px 0 0; padding-left:18px; color:var(--muted); font-size:.9rem}
+  .col li{margin:4px 0}
+
+  /* table */
+  table{width:100%; border-collapse:collapse; margin-top:22px; font-size:.88rem}
+  th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+  th{color:var(--teal); font-weight:600; font-size:.76rem; letter-spacing:.06em; text-transform:uppercase}
+  td code{font-family:var(--mono); font-size:.83rem; color:var(--text)}
+  .good{color:var(--mint);font-weight:600} .mid{color:var(--teal);font-weight:600} .bad{color:var(--copper);font-weight:600}
+
+  footer{border-top:1px solid var(--line); padding:34px 0 60px; color:var(--muted2); font-size:.85rem}
+
+  @media(prefers-reduced-motion:no-preference){
+    .reveal{opacity:0; transform:translateY(10px); animation:rise .6s ease forwards}
+    @keyframes rise{to{opacity:1; transform:none}}
+  }
+  :focus-visible{outline:2px solid var(--mint); outline-offset:3px; border-radius:4px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap reveal">
+    <span class="eyebrow">Strategic AI Integration Assessment</span>
+    <h1>The <span class="kw">Ends · Ways · Means</span> strategy pipeline</h1>
+    <p class="lead">A small system that turns one business's intake into a deck-ready analysis, then renders it into an 18-slide AI integration strategy. Objectives first; AI named only where it moves a measurable metric.</p>
+    <div class="pills">
+      <span class="pill"><b>ENDS</b> — what to achieve</span>
+      <span class="pill"><b>WAYS</b> — how to achieve it</span>
+      <span class="pill"><b>MEANS</b> — resources, incl. AI</span>
+    </div>
+  </div>
+</header>
+
+<section id="flow">
+  <div class="wrap">
+    <span class="eyebrow">The pipeline</span>
+    <h2>From a business to a deck, in five moves</h2>
+    <p class="lead">Each stage has one job. The analysis stays pure content; the generator owns the visual system.</p>
+    <div class="flow" style="margin-top:26px" aria-label="Pipeline: intake, model, analysis JSON, generator, deck">
+      <div class="node"><span class="n">01 · INPUT</span><span class="t">Intake</span><div class="d">The business: overview, ranked objectives, department-by-department current state.</div></div>
+      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="node"><span class="n">02 · ENGINE</span><span class="t">The model</span><div class="d">Prompt + scoring rubrics apply the framework and enforce the guardrails.</div></div>
+      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="node"><span class="n">03 · DATA</span><span class="t"><code>analysis.json</code></span><div class="d">The analysis as structured data, conforming to <code>schema.json</code>.</div></div>
+      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="node"><span class="n">04 · RENDER</span><span class="t"><code>index.js</code></span><div class="d">Data-driven builder — palette, layouts and color logic for all 18 slides.</div></div>
+      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="node"><span class="n">05 · OUTPUT</span><span class="t">The deck</span><div class="d">An 18-slide <code>.pptx</code> strategy, ready to present or refine.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="files">
+  <div class="wrap">
+    <span class="eyebrow">In this folder</span>
+    <h2>What each file is for</h2>
+    <div class="grid">
+      <div class="card core">
+        <div class="fn">EndsWaysMeans_Analysis_Model.md</div>
+        <span class="role">The model</span>
+        <p>The reusable engine: operating principles, intake, per-step method, scoring rubrics, and a paste-in prompt that emits <code>analysis.json</code>.</p>
+        <a class="open" href="EndsWaysMeans_Analysis_Model.md">Open →</a>
+      </div>
+      <div class="card core">
+        <div class="fn">index.js</div>
+        <span class="role">Generator</span>
+        <p>Single entry point. Reads an analysis file and writes the deck. <code>node index.js analysis.json out.pptx</code></p>
+        <a class="open" href="index.js">Open →</a>
+      </div>
+      <div class="card">
+        <div class="fn">schema.json</div>
+        <span class="role">Contract</span>
+        <p>JSON Schema fixing the structure, controlled vocabularies, and per-section counts the deck needs.</p>
+        <a class="open" href="schema.json">Open →</a>
+      </div>
+      <div class="card">
+        <div class="fn">analysis.northwind.json</div>
+        <span class="role">Example</span>
+        <p>A complete, valid analysis for the Northwind composite. Start here — copy it and fill in a real business.</p>
+        <a class="open" href="analysis.northwind.json">Open →</a>
+      </div>
+      <div class="card out">
+        <div class="fn">AI Strategy (built by the model).pptx</div>
+        <span class="role">Output</span>
+        <p>The deck the pipeline produced from the example analysis — proof the loop round-trips.</p>
+        <a class="open" href="AI%20Strategy%20(built%20by%20the%20model).pptx">Download →</a>
+      </div>
+      <div class="card out">
+        <div class="fn">AI Strategy Demo - Northwind Home Services.pptx</div>
+        <span class="role">Output</span>
+        <p>The original hand-built demo deck. Identical in content to the generated version above.</p>
+        <a class="open" href="AI%20Strategy%20Demo%20-%20Northwind%20Home%20Services.pptx">Download →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="run">
+  <div class="wrap">
+    <span class="eyebrow">Run it</span>
+    <h2>Three things to build a deck</h2>
+    <p class="lead">You need <code>index.js</code>, an <code>analysis.json</code>, and the Node dependencies. Then one command.</p>
+    <pre><span class="c"># 1 · install dependencies (once)</span>
+npm i pptxgenjs react-icons react react-dom sharp
+
+<span class="c"># 2 · produce analysis.json — via the prompt in the model doc, or by hand against schema.json</span>
+
+<span class="c"># 3 · render the deck</span>
+node index.js analysis.northwind.json <span class="k">"AI Strategy - Client.pptx"</span>
+
+<span class="c"># for a real client, set  meta.is_demo: false  to drop the demo labels</span></pre>
+  </div>
+</section>
+
+<section id="principles">
+  <div class="wrap">
+    <span class="eyebrow">How the model thinks</span>
+    <h2>Seven rules the analysis obeys</h2>
+    <ol class="principles">
+      <li><span class="num">1</span><b>Objectives first, AI last.</b> Define the Ends, fix the Way, then name AI as a Means.</li>
+      <li><span class="num">2</span><b>Every recommendation traces to a ranked objective.</b> No orphan tooling.</li>
+      <li><span class="num">3</span><b>AI only where it moves a metric.</b> Each opportunity carries a measurable benefit.</li>
+      <li><span class="num">4</span><b>Augmentation over replacement.</b> Humans keep judgment, relationships, exceptions.</li>
+      <li><span class="num">5</span><b>Incremental and milestone-based.</b> Quick win → medium-term → long-term, each with a gate.</li>
+      <li><span class="num">6</span><b>Honest about readiness and risk.</b> Rate low where it's low; name the gating constraint.</li>
+      <li><span class="num">7</span><b>Consulting-grade.</b> Specific, quantified, plain-spoken — written for this business.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="deck">
+  <div class="wrap">
+    <span class="eyebrow">What the deck covers</span>
+    <h2>18 slides, grouped by the framework</h2>
+    <div class="cols">
+      <div class="col">
+        <span class="tone">Ends — the objectives</span>
+        <ul>
+          <li>Company at a glance</li>
+          <li>The strategic challenge</li>
+          <li>Approach: Ends · Ways · Means</li>
+          <li>Five ranked objectives</li>
+          <li>Current → target scorecard</li>
+        </ul>
+      </div>
+      <div class="col">
+        <span class="tone">Ways — the methods</span>
+        <ul>
+          <li>Department friction scan</li>
+          <li>Cost of the status quo</li>
+          <li>Fix the workflow, then apply AI</li>
+          <li>AI opportunity matrix</li>
+          <li>Readiness &amp; risk assessment</li>
+        </ul>
+      </div>
+      <div class="col">
+        <span class="tone">Means — the resources</span>
+        <ul>
+          <li>Resources &amp; why they matter</li>
+          <li>12-month roadmap</li>
+          <li>Workforce transformation</li>
+          <li>Top five recommendations</li>
+          <li>Expected impact &amp; bottom line</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vocab">
+  <div class="wrap">
+    <span class="eyebrow">Quick reference</span>
+    <h2>Controlled vocabularies</h2>
+    <p class="lead">The analysis supplies the level; the generator supplies the color — <span class="good">green</span> = good/easy, <span class="mid">teal</span> = middle, <span class="bad">copper</span> = worse/harder.</p>
+    <table>
+      <thead><tr><th>Field</th><th>Allowed values</th></tr></thead>
+      <tbody>
+        <tr><td>priority · rating · confidence</td><td><code>Critical</code> <code>High</code> <code>Medium</code> <code>Low</code></td></tr>
+        <tr><td>department severity</td><td><code>High</code> <code>Medium</code></td></tr>
+        <tr><td>difficulty · roi · likelihood · impact</td><td><code>High</code> <code>Med</code> <code>Low</code></td></tr>
+        <tr><td>matrix priority</td><td><code>P1</code> <code>P2</code> <code>P3</code></td></tr>
+        <tr><td>tone</td><td><code>warn</code> <code>neutral</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Ends · Ways · Means — AI Integration Strategy Pipeline. The rubrics and structure are the durable part; any figures a run produces are a strategist's first draft to pressure-test, not final numbers. The Northwind example is an illustrative composite.
+  </div>
+</footer>
+
+</body>
+</html>
