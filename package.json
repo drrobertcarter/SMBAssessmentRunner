@@ -1,0 +1,20 @@
+{
+  "name": "smb-assessment-runner",
+  "version": "1.0.0",
+  "description": "Turns a business intake into a deck-ready analysis and renders an 18-slide AI integration strategy (Ends \u00b7 Ways \u00b7 Means).",
+  "main": "index.js",
+  "scripts": {
+    "build": "node index.js analysis.northwind.json \"AI_Strategy.pptx\"",
+    "demo": "node index.js analysis.northwind.json \"AI Strategy - Northwind.pptx\""
+  },
+  "keywords": ["ai", "strategy", "pptx", "presentation", "consulting", "ends-ways-means"],
+  "license": "MIT",
+  "dependencies": {
+    "pptxgenjs": "^4.0.1",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-icons": "^5.6.0",
+    "sharp": "^0.34.5"
+  },
+  "engines": { "node": ">=18" }
+}
